@@ -1,5 +1,4 @@
 "use client"
-import img from 'next/img'
 import { MapPin, Search } from "@deemlol/next-icons";
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '@/context/AppContext';
