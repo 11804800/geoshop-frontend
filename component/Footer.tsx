@@ -1,11 +1,10 @@
-import Image from 'next/image'
 import { Github, Instagram, Linkedin } from "@deemlol/next-icons";
 
 function Footer() {
     return (
         <div className='w-full h-full bg-black text-white py-6 px-12 flex flex-col sm:flex-row justify-center items-start'>
             <div className='w-full sm:w-[400px] p-5  sm:border-r border-white flex justify-center sm:justify-normal flex-col gap-1'>
-                <Image src="/favicon.png" alt="footer_logo" width={200} height={200} className='self-center' />
+                <img src="/favicon.png" alt="footer_logo" width={200} height={200} className='self-center' />
                 <p className='text-justify text-zinc-300 text-sm'>
                     Discover a wide selection of high-quality products at unbeatable prices. Shop confidently with fast shipping and secure checkout. Your one-stop destination for all your shopping needs!
                 </p>

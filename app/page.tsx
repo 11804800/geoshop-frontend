@@ -1,5 +1,4 @@
 import RenderProducts from "@/component/RenderProducts";
-import Image from "next/image";
 
 interface ProductInterfce {
   _id: string,
