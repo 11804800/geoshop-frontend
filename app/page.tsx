@@ -23,12 +23,9 @@ export default async function Home() {
     const res = await fetch(`${url}/products`, {
       cache: "no-store"
     });
-    if (!res.ok) {
-      throw new Error(`Failed to fetch products: ${res.statusText}`);
-    }
     data = await res.json();
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.log('Error fetching products:', error);
     return (
       <div className="w-full flex justify-center items-center p-5 h-dvh">
         <h1 className="font-medium text-2xl text-red-600">Error loading products</h1>
@@ -36,7 +33,7 @@ export default async function Home() {
     );
   }
 
-  if (data.products.length <= 0) {
+  if (data?.products?.length <= 0) {
     return (
       <div className="w-full flex justify-center items-center p-5 h-dvh">
         <h1 className="font-medium text-2xl">No Product Available</h1>
@@ -47,7 +44,7 @@ export default async function Home() {
     return (
       <div className="flex gap-3 flex-wrap justify-center py-12 px-2">
         {
-          data.products.map((item: ProductInterfce, index: number) => {
+          data.products?.map((item: ProductInterfce, index: number) => {
             return <RenderProducts key={index} item={item} />
           })
         }
