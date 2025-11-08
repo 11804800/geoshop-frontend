@@ -5,9 +5,11 @@ import { AppContext } from '@/context/AppContext';
 
 export default function Header() {
     const [ShowOption, setShowOption] = useState<boolean>(false);
+    const [ShowMobileViewOption, setShowMobileViewOption] = useState<boolean>(false);
     const { country, setCountry } = useContext(AppContext);
 
     const OptionRef = useRef<any>(null);
+    const MobileViewOptionRef = useRef<any>(null);
 
     useEffect(() => {
         if (!ShowOption) return;
@@ -22,9 +24,23 @@ export default function Header() {
         }
     }, [ShowOption]);
 
+    useEffect(() => {
+        if (!ShowMobileViewOption) return;
+        const handler = (e: any) => {
+            if (MobileViewOptionRef.current && !MobileViewOptionRef.current.contains(e.target)) {
+                setShowMobileViewOption(false);
+            }
+        }
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
+    }, [ShowMobileViewOption]);
+
     function ChangeCountry(country: string) {
         setCountry(country);
         setShowOption(false);
+        setShowMobileViewOption(false);
     }
 
     return (
@@ -69,15 +85,15 @@ export default function Header() {
             <div className='flex sm:hidden gap-1 pt-2 pb-3 px-5 items-center text-zinc-500 relative w-fit'>
                 <MapPin size={15} color="#757680" />
                 <p>Delivering Country</p>
-                <button onClick={() => setShowOption(!ShowOption)} className='text-md capitalize px-1 flex items-center gap-1'>{country}                {
-                    ShowOption ?
+                <button onClick={() => setShowMobileViewOption(!ShowMobileViewOption)} className='text-md capitalize px-1 flex items-center gap-1'>{country}                {
+                    ShowMobileViewOption ?
                         <img src="/caretup.jpg" alt='caret_up_icon' width={8} height={8} />
                         :
                         <img src="/caretdown.jpg" alt='caret_up_icon' width={8} height={8} />
                 }</button>
                 {
-                    ShowOption &&
-                    <div ref={OptionRef} className='absolute top-9 bg-white rounded-md drop-shadow flex flex-col gap-1 px-2 py-2 z-9999 right-0'>
+                    ShowMobileViewOption &&
+                    <div ref={MobileViewOptionRef} className='absolute top-9 bg-white rounded-md drop-shadow flex flex-col gap-1 px-2 py-2 z-9999 right-0'>
                         <button onClick={() => ChangeCountry("India")} className='hover:bg-zinc-100 px-5 py-1 rounded-md text-sm flex items-center gap-2'>
                             <img alt='Indian_flag' src="/India.png" width={15} height={9} />India</button>
                         <button onClick={() => ChangeCountry("usa")} className='hover:bg-zinc-100 px-5 py-1 rounded-md text-sm flex items-center gap-2'>
