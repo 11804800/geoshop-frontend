@@ -14,11 +14,27 @@ interface ProductInterfce {
 }
 
 export default async function Home() {
-  const url = process.env.BASE_URL;
-  const res = await fetch(`${url}/products`, {
-    cache: "no-store"
-  });
-  const data = await res.json();
+  const url: string | undefined = process.env.BASE_URL;
+  if (!url) {
+    throw new Error("BASE_URL environment variable is not defined");
+  }
+  let data;
+  try {
+    const res = await fetch(`${url}/products`, {
+      cache: "no-store"
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch products: ${res.statusText}`);
+    }
+    data = await res.json();
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return (
+      <div className="w-full flex justify-center items-center p-5 h-dvh">
+        <h1 className="font-medium text-2xl text-red-600">Error loading products</h1>
+      </div>
+    );
+  }
 
   if (data.products.length <= 0) {
     return (
